@@ -6,8 +6,15 @@ app = Flask(__name__)
 
 @app.route("/")
 def get_quote():
-    r = requests.get("https://api.quotable.io")
+    r = requests.get("https://api.quotable.io/random")
     quotejson = r.json()
 
-    print(quotejson['content'])
-    return render_template('index.html')
+    print(quotejson["content"])
+    print(quotejson["author"])
+
+    quote = {
+        "content" : quotejson["content"], 
+        "author": quotejson["author"]
+    }
+
+    return render_template('index.html', quote = quote)
